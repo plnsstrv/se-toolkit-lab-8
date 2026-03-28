@@ -60,7 +60,7 @@ In Task 1 you ran `nanobot agent` from the VM terminal. For production, nanobot 
 
      > **Hint:** Before writing `nanobot/Dockerfile`, inspect the existing
      > Dockerfiles in this repository, especially [`backend/Dockerfile`](../../../backend/Dockerfile)
-     > and [`qwen-code-api/Dockerfile`](../../../qwen-code-api/Dockerfile).
+     > and `qwen-code-api/Dockerfile`.
      > Reuse the established patterns for:
      > - multi-stage `uv` builds
      > - copying workspace or package files in the right order
