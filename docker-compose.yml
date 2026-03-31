@@ -95,7 +95,8 @@ services:
   # Task 2A — Nanobot agent service
   nanobot:
     build:
-      context: ./nanobot
+      context: .
+      dockerfile: ./nanobot/Dockerfile
       args:
         REGISTRY_PREFIX_DOCKER_HUB: ${REGISTRY_PREFIX_DOCKER_HUB:?'REGISTRY_PREFIX_DOCKER_HUB is required'}
     restart: unless-stopped
