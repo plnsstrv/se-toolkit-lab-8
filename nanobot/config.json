@@ -154,6 +154,10 @@
       "bridgeToken": "",
       "allowFrom": [],
       "groupPolicy": "open"
+    },
+    "webchat": {
+      "enabled": true,
+      "allowFrom": ["*"]
     }
   },
   "providers": {
