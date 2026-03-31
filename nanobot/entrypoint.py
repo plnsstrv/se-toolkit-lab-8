@@ -13,10 +13,18 @@ def resolve_config():
     llm_api_base_url = os.environ.get("LLM_API_BASE_URL")
     llm_api_model = os.environ.get("LLM_API_MODEL")
 
-    if llm_api_key:
-        config["providers"]["custom"]["apiKey"] = llm_api_key
-    if llm_api_base_url:
-        config["providers"]["custom"]["apiBase"] = llm_api_base_url
+    # Update openrouter provider if using openrouter
+    if config["agents"]["defaults"]["provider"] == "openrouter":
+        if llm_api_key:
+            config["providers"]["openrouter"]["apiKey"] = llm_api_key
+        if llm_api_base_url:
+            config["providers"]["openrouter"]["apiBase"] = llm_api_base_url
+    else:
+        # For custom provider
+        if llm_api_key:
+            config["providers"]["custom"]["apiKey"] = llm_api_key
+        if llm_api_base_url:
+            config["providers"]["custom"]["apiBase"] = llm_api_base_url
 
     # Update agent defaults with model from env
     if llm_api_model:
