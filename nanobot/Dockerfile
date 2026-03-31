@@ -16,11 +16,15 @@ RUN groupadd --system --gid 999 nonroot \
     && useradd --system --gid 999 --uid 999 --create-home nonroot
 
 # Copy nanobot files
-COPY --chown=nonroot:nonroot . /app/nanobot
+COPY --chown=nonroot:nonroot nanobot /app/nanobot
 
-# Install nanobot and dependencies
+# Copy nanobot-websocket-channel for webchat plugin
+COPY --chown=nonroot:nonroot nanobot-websocket-channel /app/nanobot-websocket-channel
+
+# Install nanobot, webchat plugin and project dependencies
 RUN cd /app/nanobot \
     && uv pip install nanobot --system \
+    && uv pip install nanobot-webchat --path /app/nanobot-websocket-channel --system \
     && uv pip install -e . --system
 
 # Place executables in the environment at the front of the path
