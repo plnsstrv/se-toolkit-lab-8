@@ -21,11 +21,9 @@ COPY --chown=nonroot:nonroot nanobot /app/nanobot
 # Copy nanobot-websocket-channel for webchat plugin
 COPY --chown=nonroot:nonroot nanobot-websocket-channel /app/nanobot-websocket-channel
 
-# Install nanobot, webchat plugin and project dependencies
-RUN cd /app/nanobot \
-    && uv pip install nanobot --system \
-    && uv pip install -e /app/nanobot-websocket-channel/nanobot-webchat --system \
-    && uv pip install -e . --system
+# Install nanobot and webchat plugin
+RUN uv pip install nanobot --system \
+    && uv pip install -e /app/nanobot-websocket-channel/nanobot-webchat --system
 
 # Place executables in the environment at the front of the path
 ENV PATH="/usr/local/bin:$PATH"
