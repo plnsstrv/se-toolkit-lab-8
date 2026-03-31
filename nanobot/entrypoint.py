@@ -17,8 +17,8 @@ def resolve_config():
     if config["agents"]["defaults"]["provider"] == "openrouter":
         if llm_api_key:
             config["providers"]["openrouter"]["apiKey"] = llm_api_key
-        if llm_api_base_url:
-            config["providers"]["openrouter"]["apiBase"] = llm_api_base_url
+        # Use openrouter default URL, not from env
+        config["providers"]["openrouter"]["apiBase"] = "https://openrouter.ai/api/v1"
     else:
         # For custom provider
         if llm_api_key:
