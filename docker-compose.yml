@@ -96,8 +96,6 @@ services:
   nanobot:
     build:
       context: ./nanobot
-      additional_contexts:
-        workspace: .
       args:
         REGISTRY_PREFIX_DOCKER_HUB: ${REGISTRY_PREFIX_DOCKER_HUB:?'REGISTRY_PREFIX_DOCKER_HUB is required'}
     restart: unless-stopped
