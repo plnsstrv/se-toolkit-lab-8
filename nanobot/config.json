@@ -2,8 +2,8 @@
   "agents": {
     "defaults": {
       "workspace": "./workspace",
-      "model": "stepfun/step-3.5-flash:free",
-      "provider": "openrouter",
+      "model": "coder-model",
+      "provider": "custom",
       "maxTokens": 8192,
       "contextWindowTokens": 65536,
       "temperature": 0.1,
