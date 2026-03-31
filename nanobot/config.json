@@ -2,8 +2,8 @@
   "agents": {
     "defaults": {
       "workspace": "./workspace",
-      "model": "coder-model",
-      "provider": "custom",
+      "model": "nvidia/nemotron-3-super-120b-a12b:free",
+      "provider": "openrouter",
       "maxTokens": 8192,
       "contextWindowTokens": 65536,
       "temperature": 0.1,
