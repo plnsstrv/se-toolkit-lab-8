@@ -55,7 +55,7 @@ def resolve_config():
     backend_api_key = os.environ.get("NANOBOT_LMS_API_KEY")
 
     if backend_url:
-        config["tools"]["mcpServers"]["lms"]["args"][1] = backend_url
+        config["tools"]["mcpServers"]["lms"]["args"][2] = backend_url
     if backend_api_key:
         config["tools"]["mcpServers"]["lms"]["env"]["NANOBOT_LMS_API_KEY"] = backend_api_key
 
