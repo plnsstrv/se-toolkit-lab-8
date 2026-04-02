@@ -15,12 +15,12 @@ RUN pip install uv
 RUN groupadd --system --gid 999 nonroot \
     && useradd --system --gid 999 --uid 999 --create-home nonroot
 
-# Copy nanobot files (from build context ./nanobot)
-COPY --chown=nonroot:nonroot . /app/nanobot
+# Copy nanobot files from repo root context
+COPY --chown=nonroot:nonroot nanobot /app/nanobot
 
-# Copy nanobot-websocket-channel and mcp from workspace additional context
-COPY --chown=nonroot:nonroot --from=workspace nanobot-websocket-channel /app/nanobot-websocket-channel
-COPY --chown=nonroot:nonroot --from=workspace mcp /app/mcp
+# Copy nanobot-websocket-channel and mcp from repo root context
+COPY --chown=nonroot:nonroot nanobot-websocket-channel /app/nanobot-websocket-channel
+COPY --chown=nonroot:nonroot mcp /app/mcp
 
 # Install nanobot, webchat plugin, and mcp
 RUN uv pip install nanobot --system \
