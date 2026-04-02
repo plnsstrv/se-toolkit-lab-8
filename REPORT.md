@@ -47,7 +47,7 @@ Paste your checkpoint evidence below. Add screenshots as image files in the repo
 
 <!-- Paste a short nanobot startup log excerpt showing the gateway started inside Docker -->
 nanobot-1  | Using config: /tmp/resolved_config.json
-  nanobot-1  | 🐈 Starting nanobot gateway version 0.1.4.post5 on port 18790...
+  nanobot-1  |  Starting nanobot gateway version 0.1.4.post5 on port 18790...
   nanobot-1  | /usr/local/lib/python3.14/site-packages/dingtalk_stream/stream.py:195: SyntaxWarning: 'return' in a
   'finally' block
   nanobot-1  |   return ip
