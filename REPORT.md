@@ -73,7 +73,7 @@ nanobot-1  | Using config: /tmp/resolved_config.json
 ## Task 2B — Web client
 
 <!-- Screenshot of a conversation with the agent in the Flutter web app -->
-<img width="2507" height="1555" alt="image" src="https://github.com/user-attachments/assets/39653302-d97d-4622-abd2-3dd699b8390a" />
+![Flutter chat screenshot](reportimages/task2b_flutter.png)
 
 
 ## Task 3A — Structured logging
