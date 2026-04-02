@@ -13,7 +13,7 @@ Paste your checkpoint evidence below. Add screenshots as image files in the repo
 
 ### Question 2: "What labs are available in our LMS?"
 
-![What labs are available in our LMS?](reportimages/What_labs_are_available_in_our_LMS.jpg)
+![What labs are available in our LMS?](reportimages/What_labs%20are_available%20in_our_LMS.jpg)
 
 *Note: The agent does not know about LMS labs because it has no tools configured yet. This is expected behavior for a bare agent.*
 
@@ -47,7 +47,7 @@ Paste your checkpoint evidence below. Add screenshots as image files in the repo
 
 <!-- Paste a short nanobot startup log excerpt showing the gateway started inside Docker -->
 nanobot-1  | Using config: /tmp/resolved_config.json
-  nanobot-1  | 🐈 Starting nanobot gateway version 0.1.4.post5 on port 18790...
+  nanobot-1  |  Starting nanobot gateway version 0.1.4.post5 on port 18790...
   nanobot-1  | /usr/local/lib/python3.14/site-packages/dingtalk_stream/stream.py:195: SyntaxWarning: 'return' in a
   'finally' block
   nanobot-1  |   return ip
@@ -73,7 +73,7 @@ nanobot-1  | Using config: /tmp/resolved_config.json
 ## Task 2B — Web client
 
 <!-- Screenshot of a conversation with the agent in the Flutter web app -->
-![Flutter chat screenshot](reportimages/task2b_flutter.png)
+<img width="2507" height="1555" alt="image" src="https://github.com/user-attachments/assets/39653302-d97d-4622-abd2-3dd699b8390a" />
 
 
 ## Task 3A — Structured logging
@@ -166,23 +166,34 @@ MCP: registered tool 'mcp_observability_traces_errors' from server 'observabilit
 MCP server 'observability': connected, 6 tools registered
 ```
 
+### Skill file
+
+The observability skill is installed at `nanobot/workspace/skills/observability/SKILL.md` and provides guidance on using the observability tools.
+
 ### Agent response to "Any errors in the last hour?":
 
+**User question:** "Any errors in the last hour? Check the logs."
+
+**Tool calls:**
 ```
-Tool call: mcp_observability_observability_services({})
-Tool call: mcp_observability_observability_health({})
-Tool call: mcp_observability_logs_errors({"hours": 1, "limit": 10})
+mcp_observability_logs_errors({"hours": 1, "limit": 20})
+mcp_observability_observability_health({})
+```
 
-Response: The observability services are currently **healthy**. Both VictoriaLogs and 
-VictoriaTraces are running. Here's what I found:
+**Agent response:**
+```
+Yes, there were **2 errors in the last hour** (both around 18:25 UTC, about 47 minutes ago):
 
-**Services available:**
-- Learning Management Service
+| Time | Error Type | Details |
+|------|------------|---------|
+| 18:25:08 | Database Error | `[Errno -2] Name or service not known` |
+| 18:25:04 | Connection Error | `connection is closed` |
 
-**Error logs in the last hour:**
-- 2 database connection errors
-- Error: "connection is closed"
-- Trace IDs: 76e571f4270ba27f3eb4b876fa3b231b, f8bd9357339cbd7de0ea162d77f52398
+Both errors occurred in the `db_query` operation on the `item` table. The trace IDs are:
+- `76e571f4270ba27f3eb4b876fa3b231b`
+- `f8bd9357339cbd7de0ea162d77f52398`
+
+**Observability services status:** Both VictoriaLogs and VictoriaTraces are healthy.
 ```
 
 PASS
