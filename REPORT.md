@@ -13,7 +13,7 @@ Paste your checkpoint evidence below. Add screenshots as image files in the repo
 
 ### Question 2: "What labs are available in our LMS?"
 
-![What labs are available in our LMS?](reportimages/What_labs%20are_available%20in_our_LMS.jpg)
+![What labs are available in our LMS?](reportimages/What_labs_are_available_in_our_LMS.jpg)
 
 *Note: The agent does not know about LMS labs because it has no tools configured yet. This is expected behavior for a bare agent.*
 
