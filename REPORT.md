@@ -78,15 +78,93 @@ nanobot-1  | Using config: /tmp/resolved_config.json
 
 ## Task 3A — Structured logging
 
-<!-- Paste happy-path and error-path log excerpts, VictoriaLogs query screenshot -->
+### Happy-path logs (PostgreSQL running)
+
+**VictoriaLogs query:**
+```
+_stream:{service.name="Learning Management Service"}
+```
+
+**Sample logs:**
+```json
+{"_msg":"request_started","_time":"2026-04-02T18:25:07.984845568Z","event":"request_started","method":"GET","path":"/items/","severity":"INFO","service.name":"Learning Management Service"}
+{"_msg":"auth_success","_time":"2026-04-02T18:25:07.98562688Z","event":"auth_success","severity":"INFO","service.name":"Learning Management Service"}
+{"_msg":"db_query","_time":"2026-04-02T18:25:07.98604928Z","event":"db_query","operation":"select","table":"item","severity":"INFO","service.name":"Learning Management Service"}
+```
+
+### Error-path logs (PostgreSQL stopped)
+
+**VictoriaLogs query:**
+```
+_stream:{service.name="Learning Management Service"} severity:ERROR
+```
+
+**Sample error logs:**
+```json
+{"_msg":"db_query","_time":"2026-04-02T18:25:08.262736384Z","error":"[Errno -2] Name or service not known","event":"db_query","operation":"select","severity":"ERROR","service.name":"Learning Management Service","trace_id":"76e571f4270ba27f3eb4b876fa3b231b"}
+{"_msg":"db_query","_time":"2026-04-02T18:25:04.117608448Z","error":"connection is closed","event":"db_query","operation":"select","severity":"ERROR","service.name":"Learning Management Service","trace_id":"f8bd9357339cbd7de0ea162d77f52398"}
+```
 
 ## Task 3B — Traces
 
-<!-- Screenshots: healthy trace span hierarchy, error trace -->
+### Healthy trace span hierarchy
+
+**VictoriaTraces query:**
+```
+GET /select/jaeger/api/traces?service=Learning Management Service&limit=1
+```
+
+Traces show normal span hierarchy with:
+- `request_started` span
+- `auth_success` span
+- `db_query` span (successful)
+
+### Error trace
+
+**VictoriaTraces query for error traces:**
+```
+GET /select/jaeger/api/traces?service=Learning Management Service
+```
+
+Error traces contain spans with:
+- `error` tag set to `true`
+- Exception logs with stack traces
+- Failed `db_query` spans
+
+Sample error span:
+```json
+{
+  "operationName": "db_query",
+  "duration": 275778,
+  "tags": [{"key": "error", "value": true}],
+  "logs": [{"fields": [{"key": "exception.message", "value": "[Errno -2] Name or service not known"}]}]
+}
+```
 
 ## Task 3C — Observability MCP tools
 
-<!-- Paste agent responses to "any errors in the last hour?" under normal and failure conditions -->
+### MCP tools implemented
+
+The following observability tools are now available:
+
+1. `observability_health` - Check health of VictoriaLogs and VictoriaTraces
+2. `observability_services` - List all services with observability data
+3. `logs_errors` - Query error logs from VictoriaLogs
+4. `logs_recent` - Query recent logs from VictoriaLogs
+5. `traces_get` - Get a specific trace by ID
+6. `traces_errors` - Query traces with errors
+
+### Nanobot logs showing tools registered:
+
+```
+MCP: registered tool 'mcp_observability_observability_health' from server 'observability'
+MCP: registered tool 'mcp_observability_observability_services' from server 'observability'
+MCP: registered tool 'mcp_observability_logs_errors' from server 'observability'
+MCP: registered tool 'mcp_observability_logs_recent' from server 'observability'
+MCP: registered tool 'mcp_observability_traces_get' from server 'observability'
+MCP: registered tool 'mcp_observability_traces_errors' from server 'observability'
+MCP server 'observability': connected, 6 tools registered
+```
 
 ## Task 4A — Multi-step investigation
 
