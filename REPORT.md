@@ -166,6 +166,27 @@ MCP: registered tool 'mcp_observability_traces_errors' from server 'observabilit
 MCP server 'observability': connected, 6 tools registered
 ```
 
+### Agent response to "Any errors in the last hour?":
+
+```
+Tool call: mcp_observability_observability_services({})
+Tool call: mcp_observability_observability_health({})
+Tool call: mcp_observability_logs_errors({"hours": 1, "limit": 10})
+
+Response: The observability services are currently **healthy**. Both VictoriaLogs and 
+VictoriaTraces are running. Here's what I found:
+
+**Services available:**
+- Learning Management Service
+
+**Error logs in the last hour:**
+- 2 database connection errors
+- Error: "connection is closed"
+- Trace IDs: 76e571f4270ba27f3eb4b876fa3b231b, f8bd9357339cbd7de0ea162d77f52398
+```
+
+PASS
+
 ## Task 4A — Multi-step investigation
 
 <!-- Paste the agent's response to "What went wrong?" showing chained log + trace investigation -->
