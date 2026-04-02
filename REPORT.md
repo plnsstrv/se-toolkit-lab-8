@@ -166,23 +166,34 @@ MCP: registered tool 'mcp_observability_traces_errors' from server 'observabilit
 MCP server 'observability': connected, 6 tools registered
 ```
 
+### Skill file
+
+The observability skill is installed at `nanobot/workspace/skills/observability/SKILL.md` and provides guidance on using the observability tools.
+
 ### Agent response to "Any errors in the last hour?":
 
+**User question:** "Any errors in the last hour? Check the logs."
+
+**Tool calls:**
 ```
-Tool call: mcp_observability_observability_services({})
-Tool call: mcp_observability_observability_health({})
-Tool call: mcp_observability_logs_errors({"hours": 1, "limit": 10})
+mcp_observability_logs_errors({"hours": 1, "limit": 20})
+mcp_observability_observability_health({})
+```
 
-Response: The observability services are currently **healthy**. Both VictoriaLogs and 
-VictoriaTraces are running. Here's what I found:
+**Agent response:**
+```
+Yes, there were **2 errors in the last hour** (both around 18:25 UTC, about 47 minutes ago):
 
-**Services available:**
-- Learning Management Service
+| Time | Error Type | Details |
+|------|------------|---------|
+| 18:25:08 | Database Error | `[Errno -2] Name or service not known` |
+| 18:25:04 | Connection Error | `connection is closed` |
 
-**Error logs in the last hour:**
-- 2 database connection errors
-- Error: "connection is closed"
-- Trace IDs: 76e571f4270ba27f3eb4b876fa3b231b, f8bd9357339cbd7de0ea162d77f52398
+Both errors occurred in the `db_query` operation on the `item` table. The trace IDs are:
+- `76e571f4270ba27f3eb4b876fa3b231b`
+- `f8bd9357339cbd7de0ea162d77f52398`
+
+**Observability services status:** Both VictoriaLogs and VictoriaTraces are healthy.
 ```
 
 PASS
